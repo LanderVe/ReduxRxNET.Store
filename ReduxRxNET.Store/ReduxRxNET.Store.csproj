@@ -11,7 +11,7 @@
     <PackageProjectUrl>https://github.com/LanderVe/ReduxRxNET.Store</PackageProjectUrl>
     <PackageReleaseNotes>First alpha</PackageReleaseNotes>
     <Copyright>Copyright 2017 Lander Verhack. All rights reserved.</Copyright>
-    <PackageTags>ReduxRxNET Redux Rx Reactive Store</PackageTags>
+    <PackageTags>ReduxRxNET Redux Rx Reactive Store ngrx</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
