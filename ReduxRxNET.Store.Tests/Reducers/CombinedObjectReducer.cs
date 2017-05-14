@@ -34,12 +34,14 @@ namespace ReduxRxNET.Store.Tests.Reducers
         if (state == null)
           return initialState;
 
-        if (action is ToggleVisibilityAction)
+        switch (action)
         {
-          return new UIState(isVisible: !state.IsVisible);
+          case ToggleVisibilityAction toggleVisibilityAction:
+            return new UIState(isVisible: !state.IsVisible);
+          default:
+            return state;
         }
 
-        return state;
       }
     }
 
@@ -54,27 +56,24 @@ namespace ReduxRxNET.Store.Tests.Reducers
         if (state == null)
           return initialState;
 
-        var addEntity1Action = action as AddEntity1Action;
-        if (addEntity1Action != null)
+        switch (action)
         {
-          var newEntity1 = new Entitiy1(addEntity1Action.Id, addEntity1Action.Value);
-          return new DataState(
-              entities1: state.Entities1.Add(addEntity1Action.Id, newEntity1),
-              entities2: state.Entities2
-            );
+          case AddEntity1Action addEntity1Action:
+            var newEntity1 = new Entitiy1(addEntity1Action.Id, addEntity1Action.Value);
+            return new DataState(
+                entities1: state.Entities1.Add(addEntity1Action.Id, newEntity1),
+                entities2: state.Entities2
+              );
+          case AddEntity2Action addEntity2Action:
+            var newEntity2 = new Entitiy2(addEntity2Action.Id, addEntity2Action.Value);
+            return new DataState(
+                entities1: state.Entities1,
+                entities2: state.Entities2.Add(addEntity2Action.Id, newEntity2)
+              );
+          default:
+            return state;
         }
 
-        var addEntity2Action = action as AddEntity2Action;
-        if (addEntity2Action != null)
-        {
-          var newEntity2 = new Entitiy2(addEntity2Action.Id, addEntity2Action.Value);
-          return new DataState(
-              entities1: state.Entities1,
-              entities2: state.Entities2.Add(addEntity2Action.Id, newEntity2)
-            );
-        }
-
-        return state;
       }
     }
 

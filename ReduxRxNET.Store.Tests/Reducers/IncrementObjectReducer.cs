@@ -9,19 +9,15 @@ namespace ReduxRxNET.Store.Tests.Reducers
   {
     public override Counter Reduce(Counter state, object action)
     {
-      var incrementAction = action as IncrementAction;
-      if (incrementAction != null)
+      switch (action)
       {
-        return new Counter(state.Value + 1);
+        case IncrementAction incrementAction:
+          return new Counter(state.Value + 1);
+        case DecrementAction decrementAction:
+          return new Counter(state.Value - 1);
+        default:
+          return state;
       }
-
-      var decrementAction = action as DecrementAction;
-      if (decrementAction != null)
-      {
-        return new Counter(state.Value - 1);
-      }
-
-      return state;
     }
 
     //actions

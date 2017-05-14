@@ -20,42 +20,35 @@ namespace ReduxRxNET.Store.Tests.Reducers
       if (state == null)
         return initialState;
 
-      var toggleVisibilityAction = action as ToggleVisibilityAction;
-      if (toggleVisibilityAction != null)
+      switch (action)
       {
-        return new ApplicationState(
-          ui: new UIState(isVisible: !state.UI.IsVisible),
-          data: state.Data
-        );
-      }
-
-      var addEntity1Action = action as AddEntity1Action;
-      if (addEntity1Action != null)
-      {
-        var newEntity1 = new Entitiy1(addEntity1Action.Id, addEntity1Action.Value);
-        return new ApplicationState(
-            ui: state.UI,
-            data: new DataState(
-              entities1: state.Data.Entities1.Add(addEntity1Action.Id, newEntity1),
-              entities2: state.Data.Entities2
-            )
+        case ToggleVisibilityAction toggleVisibilityAction:
+          return new ApplicationState(
+            ui: new UIState(isVisible: !state.UI.IsVisible),
+            data: state.Data
           );
+        case AddEntity1Action addEntity1Action:
+          var newEntity1 = new Entitiy1(addEntity1Action.Id, addEntity1Action.Value);
+          return new ApplicationState(
+              ui: state.UI,
+              data: new DataState(
+                entities1: state.Data.Entities1.Add(addEntity1Action.Id, newEntity1),
+                entities2: state.Data.Entities2
+              )
+            );
+        case AddEntity2Action addEntity2Action:
+          var newEntity2 = new Entitiy2(addEntity2Action.Id, addEntity2Action.Value);
+          return new ApplicationState(
+              ui: state.UI,
+              data: new DataState(
+                entities1: state.Data.Entities1,
+                entities2: state.Data.Entities2.Add(addEntity2Action.Id, newEntity2)
+              )
+            );
+        default:
+          return state;
       }
 
-      var addEntity2Action = action as AddEntity2Action;
-      if (addEntity2Action != null)
-      {
-        var newEntity2 = new Entitiy2(addEntity2Action.Id, addEntity2Action.Value);
-        return new ApplicationState(
-            ui: state.UI,
-            data: new DataState(
-              entities1: state.Data.Entities1,
-              entities2: state.Data.Entities2.Add(addEntity2Action.Id, newEntity2)
-            )
-          );
-      }
-
-      return state;
     }
 
     //actions

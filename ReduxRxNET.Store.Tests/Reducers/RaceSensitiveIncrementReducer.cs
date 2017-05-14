@@ -10,25 +10,25 @@ namespace ReduxRxNET.Store.Tests.Reducers
   {
     public override int Reduce(int state, object action)
     {
-      var incrementAction = action as IncrementAction;
-      if (incrementAction != null)
+      switch (action)
       {
-        var temp = state;
-        Thread.Sleep(200);
-        temp += 1;
-        return temp;
+        case IncrementAction incrementAction:
+          {
+            var temp = state;
+            Thread.Sleep(200);
+            temp += 1;
+            return temp;
+          }
+        case DecrementAction decrementAction:
+          {
+            var temp = state;
+            Thread.Sleep(200);
+            temp -= 1;
+            return temp;
+          }
+        default:
+          return state;
       }
-
-      var decrementAction = action as DecrementAction;
-      if (decrementAction != null)
-      {
-        var temp = state;
-        Thread.Sleep(200);
-        temp -= 1;
-        return temp;
-      }
-
-      return state;
     }
 
 
